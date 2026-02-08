@@ -8,8 +8,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ies.sequeros.dam.pmdm.gestionperifl.ui.AppRoutes
 import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppViewModel
+import ies.sequeros.dam.pmdm.gestionperifl.ui.components.register.RegisterComponent
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.init.InitComponent
 import ies.sequeros.dam.pmdm.gestionperifl.ui.login.LoginScreen
+import ies.sequeros.dam.pmdm.gestionperifl.ui.register.RegisterScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -31,6 +33,12 @@ fun App() {
             }
             composable ( AppRoutes.Login ){
                 LoginScreen(
+                    onLogin = {navController.navigate(AppRoutes.Init)},
+                    onCancel = {navController.navigate(AppRoutes.Init)}
+                )
+            }
+            composable ( AppRoutes.Register ){
+                RegisterScreen(
                     onLogin = {navController.navigate(AppRoutes.Init)},
                     onCancel = {navController.navigate(AppRoutes.Init)}
                 )
