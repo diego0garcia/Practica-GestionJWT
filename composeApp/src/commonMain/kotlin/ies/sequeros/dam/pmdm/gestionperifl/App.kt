@@ -10,6 +10,7 @@ import ies.sequeros.dam.pmdm.gestionperifl.ui.AppRoutes
 import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.register.RegisterComponent
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.init.InitComponent
+import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeScreen
 import ies.sequeros.dam.pmdm.gestionperifl.ui.login.LoginScreen
 import ies.sequeros.dam.pmdm.gestionperifl.ui.register.RegisterScreen
 import org.koin.compose.viewmodel.koinViewModel
@@ -28,7 +29,8 @@ fun App() {
             composable ( AppRoutes.Init ){
                 InitComponent(
                     onLogin = {navController.navigate(AppRoutes.Login)},
-                    onRegister = {navController.navigate(AppRoutes.Register)}
+                    onRegister = {navController.navigate(AppRoutes.Register)},
+                    onEnter = {navController.navigate(AppRoutes.Home)}
                 )
             }
             composable ( AppRoutes.Login ){
@@ -41,6 +43,11 @@ fun App() {
                 RegisterScreen(
                     onLogin = {navController.navigate(AppRoutes.Init)},
                     onCancel = {navController.navigate(AppRoutes.Init)}
+                )
+            }
+            composable ( AppRoutes.Home ){
+                HomeScreen(
+                    onCloseSesion = {navController.navigate(AppRoutes.Init)}
                 )
             }
         }

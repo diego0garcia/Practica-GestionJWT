@@ -14,7 +14,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun InitComponent(
     onLogin: () -> Unit,
-    onRegister: () -> Unit
+    onRegister: () -> Unit,
+    onEnter: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -54,6 +55,14 @@ fun InitComponent(
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text("Registrarse")
+                }
+
+                OutlinedButton(
+                    onClick = onEnter,
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text("Entrar sin registrase (Depurar)")
                 }
             }
         }

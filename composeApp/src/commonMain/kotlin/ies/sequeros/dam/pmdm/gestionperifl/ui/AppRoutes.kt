@@ -4,5 +4,5 @@ object AppRoutes {
     const val Init = "init"
     const val Login = "login"
     const val Register = "register"
-    const val App = "app"
+    const val Home = "home"
 }
