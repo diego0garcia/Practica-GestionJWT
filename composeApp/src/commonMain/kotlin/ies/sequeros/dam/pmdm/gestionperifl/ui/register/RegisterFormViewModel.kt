@@ -4,8 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.RegisterUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.RegisterUserUseCase
+import ies.sequeros.dam.pmdm.gestionperifl.dominio.dto.UserDto
 import ies.sequeros.dam.pmdm.gestionperifl.dominio.repository.IAuthRepository
+import ies.sequeros.dam.pmdm.gestionperifl.modelo.User
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.register.RegisterState
+import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +20,6 @@ class RegisterFormViewModel(
     repository: IAuthRepository,
     val registerUseCase: RegisterUserUseCase
 ) : ViewModel() {
-
     private val _state = MutableStateFlow(RegisterState())
     val state: StateFlow<RegisterState> = _state.asStateFlow()
     val isFormValid = MutableStateFlow(false)
@@ -26,7 +28,7 @@ class RegisterFormViewModel(
         _state.update {
             it.copy(
                 username = username,
-                usernameError = if (username.length >= 5) null else "Mínimo 5 carácteres"
+                usernameError = if (username.length > 8) null else "Mínimo 8 carácteres"
             )
         }
         validateForm()
@@ -64,23 +66,28 @@ class RegisterFormViewModel(
         _state.value = state.value.copy(isValid = isFormValid.value)
     }
 
-    fun register() {
+    fun onRegisterClick(vm: HomeViewModel) {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, errorMessage = null) }
+            val userDto = register()
+            if (userDto != null) {
+                println(userDto.username + userDto.email +  state.value.password,)
+                vm.updateUser(User(username = userDto.username, email = userDto.email, password = state.value.password, null))
+            }
+        }
+    }
 
-            try {
-                //cargando
-                //_state.value = state.value.copy(isLoading = true)
-                //crear el comando, llamar al caso de uso
-                //que devuelve ok, o un error en el result
-                val registerCommand =
-                    RegisterUserCommand(
-                        username = state.value.username,
-                        email = state.value.email,
-                        password = state.value.password
-                    )
+    suspend fun register(): UserDto? {
+        _state.update { it.copy(isLoading = true, errorMessage = null) }
 
-                val result = registerUseCase.invoke(registerCommand)
+        try {
+            val registerCommand =
+                RegisterUserCommand(
+                    username = state.value.username,
+                    email = state.value.email,
+                    password = state.value.password
+                )
+
+            val result = registerUseCase.invoke(registerCommand)
                 .onSuccess {
                     //_state.value = _state.value.copy(isLoginSuccess = true)
                     _state.update { it.copy(isLoading = false, isLoginSuccess = true) }
@@ -88,7 +95,6 @@ class RegisterFormViewModel(
 
                 }.onFailure { error ->
                     _state.update { it.copy(isLoading = false, isLoginSuccess = false) }
-                    // Aquí renombramos 'it' a 'error' para que sea más claro
                     _state.update {
                         it.copy(
                             isLoading = false,
@@ -96,18 +102,21 @@ class RegisterFormViewModel(
                             errorMessage = error.message ?: "Ha ocurrido un error desconocido"
                         )
                     }
+                }
 
-                }
-            } catch (e: Exception) {
-                _state.update {
-                    it.copy(
-                        isLoading = false,
-                        errorMessage = "Error al conectar: ${e.message}"
-                    )
-                }
-            } finally {
-                _state.value = _state.value.copy(isLoading = false)
+            return result.getOrNull()
+
+        } catch (e: Exception) {
+            _state.update {
+                it.copy(
+                    isLoading = false,
+                    errorMessage = "Error al conectar: ${e.message}"
+                )
             }
+        } finally {
+            _state.value = _state.value.copy(isLoading = false)
         }
+
+        return null
     }
 }

@@ -5,4 +5,8 @@ import ies.sequeros.dam.pmdm.gestionperifl.dominio.dto.UserDto
 
 interface IAuthRepository {
     suspend fun register(command: RegisterUserCommand) : UserDto
+
+    //suspend fun login(command: RegisterUserCommand) : UserDto
+
+    //suspend fun delete(command: RegisterUserCommand) : UserDto
 }

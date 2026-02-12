@@ -41,7 +41,7 @@ fun App() {
             }
             composable ( AppRoutes.Register ){
                 RegisterScreen(
-                    onLogin = {navController.navigate(AppRoutes.Init)},
+                    onRegister = {navController.navigate(AppRoutes.Home)},
                     onCancel = {navController.navigate(AppRoutes.Init)}
                 )
             }
