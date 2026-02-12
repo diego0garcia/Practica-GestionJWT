@@ -1,4 +1,4 @@
-package ies.sequeros.dam.pmdm.gestionperifl.application.commons
+package ies.sequeros.dam.pmdm.gestionperifl.application.command
 
 import ies.sequeros.dam.pmdm.gestionperifl.application.serializers.UUIDSerializer
 import ies.sequeros.dam.pmdm.gestionperifl.domain.entities.User

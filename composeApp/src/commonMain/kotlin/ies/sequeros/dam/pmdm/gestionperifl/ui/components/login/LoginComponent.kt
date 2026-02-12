@@ -10,6 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun LoginComponent (state: LoginState,
@@ -17,6 +19,9 @@ fun LoginComponent (state: LoginState,
                     onPasswordChange: (String) -> Unit,
                     onLoginClick: () -> Unit,
                     onCancel: () -> Unit) {
+
+    val vmHome: HomeViewModel = koinViewModel()
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -97,6 +102,7 @@ fun LoginComponent (state: LoginState,
                     Button(
                         onClick = {
                             onLoginClick()
+                            //vmHome.sesionManager.iniciarSesion(state.user!!, "")
                             //viewModel.login()
 
                         },

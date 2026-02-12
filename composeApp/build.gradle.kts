@@ -63,17 +63,20 @@ kotlin {
 
             //iconos
             implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
+
             //injección de dependencias
             implementation("io.insert-koin:koin-compose:4.1.1")
             implementation("io.insert-koin:koin-compose-viewmodel:4.1.1")
             implementation("io.insert-koin:koin-compose-viewmodel-navigation:4.1.1")
+
             //carga de imagenes
             // https://mvnrepository.com/artifact/io.coil-kt.coil3/coil
+
             // Imágenes
             implementation("io.coil-kt.coil3:coil-compose:3.3.0")
             // implementation("io.coil-kt.coil3:coil:3.3.0")
-
             implementation("io.coil-kt.coil3:coil-network-ktor3:3.3.0")
+
             //ktor para servicios
             implementation(libs.ktor.client.core)
             implementation("io.ktor:ktor-client-auth:3.3.0")
@@ -82,19 +85,20 @@ kotlin {
             implementation("io.ktor:ktor-serialization-kotlinx-json:3.3.0")
             implementation("io.ktor:ktor-client-logging:3.3.0")
 
-
             //tamanyo pantalla
             implementation("org.jetbrains.compose.material3.adaptive:adaptive:1.1.2")
+
             //json
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+
             //diseños canonicos
             implementation("org.jetbrains.compose.material3.adaptive:adaptive:1.2.0")
             implementation("org.jetbrains.compose.material3.adaptive:adaptive-layout:1.2.0")
             implementation("org.jetbrains.compose.material3.adaptive:adaptive-navigation:1.2.0")
+
             //viewmodel en koin
             implementation("io.insert-koin:koin-core-viewmodel:2.3.0")
             implementation("io.insert-koin:koin-compose-viewmodel:2.3.0")
-
 
             //seleccion de ficheros
             implementation("io.github.vinceglb:filekit-core:0.12.0")
