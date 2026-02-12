@@ -13,7 +13,13 @@ import io.ktor.http.*
 
 class RestLoginRepository(private val url: String, private val _client: HttpClient) : IAuthRepository {
     override suspend fun register(command: RegisterUserCommand) {
-        TODO("Not yet implemented")
+        val request = _client.post("$url/register") {
+            contentType(ContentType.Application.Json)
+            setBody(command)
+        }
+        if (request.status.isSuccess()) {
+            throw Exception("Error while registering user: ${request.status.description}")
+        }
     }
 
     override suspend fun login(command: LoginUserCommand): User {
