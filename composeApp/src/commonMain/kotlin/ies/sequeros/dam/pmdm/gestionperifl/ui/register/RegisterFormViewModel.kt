@@ -42,10 +42,11 @@ class RegisterFormViewModel(
     }
 
     fun onPasswordChange(password: String) {
+        val passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$".toRegex()
         _state.update {
             it.copy(
                 password = password,
-                passwordError = if (password.length >= 6) null else "Mínimo 6 caracteres"
+                passwordError = if (password.matches(passwordRegex)) null else "La contraseña debe incluir mayúscula, minúscula, número y un carácter especial"
             )
         }
         validateForm()

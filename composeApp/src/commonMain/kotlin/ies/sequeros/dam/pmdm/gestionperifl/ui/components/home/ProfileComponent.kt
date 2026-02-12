@@ -13,5 +13,6 @@ fun ProfileComponent(){
     val vm: HomeViewModel = koinViewModel()
     Column (modifier = Modifier.fillMaxSize()){
         Text("Usuario: " + vm.sesionManager.currentUser.value?.username)
+        Text("email: " + vm.sesionManager.currentUser.value?.email)
     }
 }

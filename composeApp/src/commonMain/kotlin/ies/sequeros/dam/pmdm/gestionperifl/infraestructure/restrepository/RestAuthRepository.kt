@@ -6,18 +6,22 @@ import ies.sequeros.dam.pmdm.gestionperifl.dominio.dto.User
 import ies.sequeros.dam.pmdm.gestionperifl.dominio.repository.IAuthRepository
 import ies.sequeros.dam.pmdm.gestionperifl.infraestructure.LoginRespuesta
 import ies.sequeros.dam.pmdm.gestionperifl.infraestructure.TokenJwt
+import ies.sequeros.dam.pmdm.gestionperifl.ui.sesion.SesionManager
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-class RestLoginRepository(private val url: String, private val _client: HttpClient) : IAuthRepository {
+class RestAuthRepository(private val url: String, private val _client: HttpClient, private val sesionManager: SesionManager) : IAuthRepository {
     override suspend fun register(command: RegisterUserCommand) {
-        TODO("Not yet implemented")
+        val request = _client.post(url + "register") {
+            contentType(ContentType.Application.Json)
+            setBody(command)
+        }
     }
 
     override suspend fun login(command: LoginUserCommand): User {
-        val request = _client.post(url) {
+        val request = _client.post(url + "login") {
             contentType(ContentType.Application.Json)
             setBody(command)
         }
@@ -31,14 +35,18 @@ class RestLoginRepository(private val url: String, private val _client: HttpClie
         }
 
         val respuesta: LoginRespuesta = request.body()
-        val token = TokenJwt(respuesta.idToken)
+        val tokenDatos = TokenJwt(respuesta.idToken)
+        val tokenAccess = TokenJwt(respuesta.accessToken)
+        val tokenRefresh = TokenJwt(respuesta.refreshToken)
 
         val user: User = User(
-            id = token.payload.userId ?: "",
-            username = token.payload.userName ?: "",
-            email = token.payload.userEmail ?: "",
-            image = token.payload.userImage
+            id = tokenDatos.payload.userId ?: "",
+            username = tokenDatos.payload.userName ?: "",
+            email = tokenDatos.payload.userEmail ?: "",
+            image = tokenDatos.payload.userImage
         )
+
+        sesionManager.iniciarSesion(user, tokenAccess.rawToken, tokenRefresh.rawToken)
 
         return user
     }
