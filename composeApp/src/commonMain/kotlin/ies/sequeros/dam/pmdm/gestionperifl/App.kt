@@ -2,6 +2,7 @@ package ies.sequeros.dam.pmdm.gestionperifl
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,12 +20,17 @@ import org.koin.compose.viewmodel.koinViewModel
 @Preview
 fun App() {
     val appViewModel: AppViewModel = koinViewModel()
-
+    val user by appViewModel.currentUser.collectAsState()
     val navController = rememberNavController()
     AppTheme(appViewModel.isDarkMode.collectAsState()) {
         NavHost(
             navController = navController,
-            startDestination = AppRoutes.Init
+
+            startDestination = if (user != null) {
+                AppRoutes.Home
+            } else {
+                AppRoutes.Login
+            }
         ){
             composable ( AppRoutes.Init ){
                 InitComponent(
