@@ -15,16 +15,14 @@ import ies.sequeros.dam.pmdm.gestionperifl.ui.register.RegisterFormViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun RegisterComponent (state: RegisterState,
-                    onUsernameChange: (String) -> Unit,
-                    onEmailChange: (String) -> Unit,
-                    onPasswordChange: (String) -> Unit,
-                    onRegisterClick: () -> Unit,
-                    onCancel: () -> Unit) {
-
-    val vm: RegisterFormViewModel = koinViewModel()
-    val homeVm: HomeViewModel = koinViewModel()
-
+fun RegisterComponent(
+    state: RegisterState,
+    onUsernameChange: (String) -> Unit,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onRegisterClick: () -> Unit,
+    onCancel: () -> Unit
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -128,6 +126,7 @@ fun RegisterComponent (state: RegisterState,
                     ) {
                         Text("Registrarse")
                     }
+                    /*
                     if (state.errorMessage != null) {
                         Text(
                             text = state.errorMessage,
@@ -138,6 +137,7 @@ fun RegisterComponent (state: RegisterState,
                                 .fillMaxWidth()
                         )
                     }
+                     */
                 }
             }
         }

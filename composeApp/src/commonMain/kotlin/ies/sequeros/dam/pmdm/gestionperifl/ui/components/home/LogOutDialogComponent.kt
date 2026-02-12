@@ -22,12 +22,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeViewModel
+import ies.sequeros.dam.pmdm.gestionperifl.ui.sesion.SesionManager
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun LogOutDialogComponet(
     onDismiss: () -> Unit,
     onAccept: () -> Unit
 ) {
+
+    val vm: HomeViewModel = koinViewModel()
+
     Dialog(
         onDismissRequest = {
             onDismiss()
@@ -69,6 +75,7 @@ fun LogOutDialogComponet(
                     }
                     Button(
                         onClick = {
+                            vm.sesionManager.cerrarSesion()
                             onAccept()
                         },
                         modifier = Modifier.weight(1f),

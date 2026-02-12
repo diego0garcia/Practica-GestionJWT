@@ -19,5 +19,6 @@ data class LoginState(
     val errorMessage: String? = null,
 
     //El usuario ya logeado lo recibimos aqui
-    val user: User? = null
+    val user: User? = null,
+    val token: String? = null
 )
