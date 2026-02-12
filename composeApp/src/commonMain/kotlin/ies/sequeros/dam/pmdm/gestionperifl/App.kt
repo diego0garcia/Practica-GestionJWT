@@ -35,7 +35,7 @@ fun App() {
             }
             composable ( AppRoutes.Login ){
                 LoginScreen(
-                    onLogin = {navController.navigate(AppRoutes.Init)},
+                    onLogin = {navController.navigate(AppRoutes.Home)},
                     onCancel = {navController.navigate(AppRoutes.Init)}
                 )
             }

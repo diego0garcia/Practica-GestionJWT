@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 
 class AppViewModel(
     private val settings: AppSettings,
-
 ) : ViewModel() {
     val isDarkMode = settings.isDarkMode
     //se toma el valor de la sesion

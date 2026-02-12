@@ -30,8 +30,7 @@ fun RegisterScreen(
     }
 
     RegisterComponent(
-        state, viewModel::onUsernameChange, viewModel::onEmailChange, viewModel::onPasswordChange,
-        {viewModel.onRegisterClick(homeViewModel)},
+        state, viewModel::onUsernameChange, viewModel::onEmailChange, viewModel::onPasswordChange, viewModel::onRegisterClick,
         {
             onCancel()
         })

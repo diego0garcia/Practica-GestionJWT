@@ -1,5 +1,6 @@
 package ies.sequeros.dam.pmdm.gestionperifl.di
 
+import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.LoginUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.RegisterUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.infraestructure.ktor.createHttpClient
 import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppSettings
@@ -7,6 +8,7 @@ import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.login.LoginFormViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.register.RegisterFormViewModel
+import ies.sequeros.dam.pmdm.gestionperifl.ui.sesion.SesionManager
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -34,10 +36,13 @@ val appModulo = module {
     capa de presentación
      **/
     single { AppSettings() }
+    single { SesionManager() }
+
     viewModel { AppViewModel(get()) }
-    viewModel { LoginFormViewModel() }
+    viewModel { LoginFormViewModel(get(), get()) }
     viewModel { RegisterFormViewModel(get(), get()) }
-    viewModel { HomeViewModel() }
+    viewModel { HomeViewModel(get()) }
 
     factory { RegisterUserUseCase(get()) }
+    factory { LoginUserUseCase(get()) }
 }

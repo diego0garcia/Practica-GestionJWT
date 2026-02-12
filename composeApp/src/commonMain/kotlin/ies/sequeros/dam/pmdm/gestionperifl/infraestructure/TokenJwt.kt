@@ -15,6 +15,9 @@ data class TokenJwtPayload(val claims: Map<String, Any> = emptyMap()){
 
     // Propiedades calculadas para los campos más comunes (opcional)
     val userId: String? get() = get("sub")
+    val userName: String? get() = get("name")
+    val userEmail: String? get() = get("email")
+    val userImage: String? get() = get("picture")
     val expiration: Long? get() = (claims["exp"] as? Number)?.toLong()
 }
 data class TokenJwtFirma(val firma:String)

@@ -1,13 +1,13 @@
 package ies.sequeros.dam.pmdm.gestionperifl.application.usecase
 
-import ies.sequeros.dam.pmdm.gestionperifl.application.command.RegisterUserCommand
-import ies.sequeros.dam.pmdm.gestionperifl.dominio.dto.UserDto
+import ies.sequeros.dam.pmdm.gestionperifl.application.command.LoginUserCommand
+import ies.sequeros.dam.pmdm.gestionperifl.dominio.dto.User
 import ies.sequeros.dam.pmdm.gestionperifl.dominio.repository.IAuthRepository
 
-class RegisterUserUseCase(private val repository: IAuthRepository) {
-    suspend fun invoke(command: RegisterUserCommand): Result<UserDto> {
+class LoginUserUseCase(private val repository: IAuthRepository) {
+    suspend fun invoke(command: LoginUserCommand): Result<User> {
         try {
-            val user = repository.register(command)
+            val user = repository.login(command)
             return Result.success(user)
         }catch (ex: Exception){
             return Result.failure(ex)

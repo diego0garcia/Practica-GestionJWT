@@ -4,11 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.RegisterUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.RegisterUserUseCase
-import ies.sequeros.dam.pmdm.gestionperifl.dominio.dto.UserDto
 import ies.sequeros.dam.pmdm.gestionperifl.dominio.repository.IAuthRepository
-import ies.sequeros.dam.pmdm.gestionperifl.modelo.User
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.register.RegisterState
-import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -66,17 +63,13 @@ class RegisterFormViewModel(
         _state.value = state.value.copy(isValid = isFormValid.value)
     }
 
-    fun onRegisterClick(vm: HomeViewModel) {
+    fun onRegisterClick() {
         viewModelScope.launch {
-            val userDto = register()
-            if (userDto != null) {
-                println(userDto.username + userDto.email +  state.value.password,)
-                vm.updateUser(User(username = userDto.username, email = userDto.email, password = state.value.password, null))
-            }
+            register()
         }
     }
 
-    suspend fun register(): UserDto? {
+    suspend fun register() {
         _state.update { it.copy(isLoading = true, errorMessage = null) }
 
         try {
@@ -91,7 +84,7 @@ class RegisterFormViewModel(
                 .onSuccess {
                     //_state.value = _state.value.copy(isLoginSuccess = true)
                     _state.update { it.copy(isLoading = false, isLoginSuccess = true) }
-                    print("Respuesta: " + it)
+                    //print("Respuesta: " + it)
 
                 }.onFailure { error ->
                     _state.update { it.copy(isLoading = false, isLoginSuccess = false) }
@@ -104,7 +97,6 @@ class RegisterFormViewModel(
                     }
                 }
 
-            return result.getOrNull()
 
         } catch (e: Exception) {
             _state.update {
@@ -117,6 +109,5 @@ class RegisterFormViewModel(
             _state.value = _state.value.copy(isLoading = false)
         }
 
-        return null
     }
 }

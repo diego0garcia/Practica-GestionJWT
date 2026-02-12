@@ -15,12 +15,10 @@ import org.koin.compose.viewmodel.koinViewModel
 fun HomeComponent(){
     val vm: HomeViewModel = koinViewModel()
 
-    val currentUser by vm.user.collectAsState()
-
     Column(
         Modifier.fillMaxSize()
     ){
         Text("Home")
-        Text("Bienvenido ${currentUser.username}")
+        Text("Bienvenido")
     }
 }
