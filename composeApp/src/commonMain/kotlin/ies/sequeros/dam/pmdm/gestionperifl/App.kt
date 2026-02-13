@@ -8,7 +8,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ies.sequeros.dam.pmdm.gestionperifl.ui.AppRoutes
 import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppViewModel
-import ies.sequeros.dam.pmdm.gestionperifl.ui.components.register.RegisterComponent
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.init.InitComponent
 import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeScreen
 import ies.sequeros.dam.pmdm.gestionperifl.ui.login.LoginScreen
@@ -41,7 +40,7 @@ fun App() {
             }
             composable ( AppRoutes.Register ){
                 RegisterScreen(
-                    onRegister = {navController.navigate(AppRoutes.Home)},
+                    onRegister = {navController.navigate(AppRoutes.Init)},
                     onCancel = {navController.navigate(AppRoutes.Init)}
                 )
             }

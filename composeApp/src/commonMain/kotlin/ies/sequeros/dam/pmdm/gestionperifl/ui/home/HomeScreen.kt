@@ -13,6 +13,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 
@@ -25,6 +26,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppViewModel
+import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.DeleteDialogComponet
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.HomeComponent
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.LogOutDialogComponet
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.ProfileComponent
@@ -35,9 +37,20 @@ fun HomeScreen(
 ) {
     val vm = koinViewModel<HomeViewModel>()
     val appVm = koinViewModel<AppViewModel>()
+    val profVm = koinViewModel<ProfileViewModel>()
+
+    val deleteUser by profVm.deleteState.collectAsState()
+
     val navController = rememberNavController()
     val options by vm.options.collectAsState()
     var showDialogCloseSesion by remember { mutableStateOf(false) }
+    var showDialogDeleteUser by remember { mutableStateOf(false) }
+
+    LaunchedEffect(deleteUser.isDeleted) {
+        if (deleteUser.isDeleted) {
+            onCloseSesion()
+        }
+    }
 
     vm.setOptions(
         listOf(
@@ -85,7 +98,11 @@ fun HomeScreen(
                 HomeComponent()
             }
             composable(HomeRoutes.Profile) {
-                ProfileComponent()
+                ProfileComponent(
+                    {
+                        showDialogDeleteUser = !showDialogDeleteUser
+                    }
+                )
             }
         }
     }
@@ -116,6 +133,15 @@ fun HomeScreen(
                 onCloseSesion()
             },
             onDismiss = { showDialogCloseSesion = false }
+        )
+    }
+
+    if (showDialogDeleteUser) {
+        DeleteDialogComponet(
+            onAccept = {
+                showDialogDeleteUser = false
+            },
+            onDismiss = { showDialogDeleteUser = false }
         )
     }
 }

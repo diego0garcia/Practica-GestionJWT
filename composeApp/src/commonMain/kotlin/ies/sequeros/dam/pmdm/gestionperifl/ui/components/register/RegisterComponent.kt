@@ -10,9 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeViewModel
-import ies.sequeros.dam.pmdm.gestionperifl.ui.register.RegisterFormViewModel
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun RegisterComponent(

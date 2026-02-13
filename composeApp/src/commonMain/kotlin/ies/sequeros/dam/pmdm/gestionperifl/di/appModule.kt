@@ -1,11 +1,13 @@
 package ies.sequeros.dam.pmdm.gestionperifl.di
 
+import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.DeleteUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.LoginUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.RegisterUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.infraestructure.ktor.createHttpClient
 import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppSettings
 import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeViewModel
+import ies.sequeros.dam.pmdm.gestionperifl.ui.home.ProfileViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.login.LoginFormViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.register.RegisterFormViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.sesion.SesionManager
@@ -42,7 +44,9 @@ val appModulo = module {
     viewModel { LoginFormViewModel(get(), get()) }
     viewModel { RegisterFormViewModel(get(), get()) }
     viewModel { HomeViewModel(get()) }
+    viewModel { ProfileViewModel(get(), get()) }
 
     factory { RegisterUserUseCase(get()) }
     factory { LoginUserUseCase(get()) }
+    factory { DeleteUserUseCase(get()) }
 }
