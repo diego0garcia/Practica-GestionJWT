@@ -76,7 +76,6 @@ fun LoginComponent(
             }
 
             Spacer(modifier = Modifier.height(32.dp))
-
             if (state.isLoading) {
                 CircularProgressIndicator()
             } else {
