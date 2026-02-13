@@ -4,9 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.DeleteUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.RegisterUserCommand
+import ies.sequeros.dam.pmdm.gestionperifl.application.command.UpdateUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.DeleteUserUseCase
+import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.UpdateUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.DeleteState
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.ProfileState
+import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.UserStatus
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.register.RegisterState
 import ies.sequeros.dam.pmdm.gestionperifl.ui.sesion.SesionManager
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +20,8 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val _sesionManager: SesionManager,
-    private val deleteUserUseCase: DeleteUserUseCase
+    private val deleteUserUseCase: DeleteUserUseCase,
+    private val updateUserUseCase: UpdateUserUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(ProfileState())
     val state: StateFlow<ProfileState> = _state.asStateFlow()
@@ -34,12 +38,13 @@ class ProfileViewModel(
             _state.update {
                 it.copy(
                     username = user.username,
-                    email = user.email,
+                    status = UserStatus.PENDING,
                 )
             }
         }
     }
 
+    /*
     fun onEmailChange(email: String) {
         _state.update {
             it.copy(
@@ -49,12 +54,22 @@ class ProfileViewModel(
         }
         validateForm()
     }
+     */
 
     fun onUsernameChange(username: String) {
         _state.update {
             it.copy(
                 username = username,
                 usernameError = if (username.length > 8) null else "Mínimo 8 carácteres"
+            )
+        }
+        validateForm()
+    }
+
+    fun onStatusChange(status: UserStatus) {
+        _state.update {
+            it.copy(
+                status = status,
             )
         }
         validateForm()
@@ -108,8 +123,6 @@ class ProfileViewModel(
                         )
                     }
                 }
-
-
         } catch (e: Exception) {
             _deleteState.update {
                 it.copy(
@@ -119,6 +132,50 @@ class ProfileViewModel(
             }
         } finally {
             _deleteState.value = _deleteState.value.copy(isLoading = false)
+        }
+    }
+
+    fun onUpdate() {
+        viewModelScope.launch {
+            update()
+        }
+    }
+
+    private suspend fun update() {
+        _state.update { it.copy(isLoading = true, errorMessage = null) }
+        try {
+            val updateUserCommand =
+                UpdateUserCommand(
+                    state.value.username,
+                    state.value.status
+                )
+
+            val result = updateUserUseCase.invoke(updateUserCommand)
+                .onSuccess {
+                    //_state.value = _state.value.copy(isLoginSuccess = true)
+                    _state.update { it.copy(isLoading = false, isUpdateSuccess = true) }
+                    //_sesionManager.cerrarSesion()
+                    //print("Respuesta: " + it)
+
+                }.onFailure { error ->
+                    _state.update { it.copy(isLoading = false, isUpdateSuccess = false) }
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            isUpdateSuccess = false,
+                            errorMessage = error.message ?: "Ha ocurrido un error desconocido"
+                        )
+                    }
+                }
+        } catch (e: Exception) {
+            _state.update {
+                it.copy(
+                    isLoading = false,
+                    errorMessage = "Error al borrar: ${e.message}"
+                )
+            }
+        } finally {
+            _state.value = _state.value.copy(isLoading = false)
         }
     }
 
@@ -132,9 +189,9 @@ class ProfileViewModel(
         val s = _state.value
         isFormValid.value =
             s.username.isNotBlank() &&
-                    s.email.isNotBlank() &&
-                    s.usernameError == null &&
-                    s.emailError == null
+                    //s.email.isNotBlank() &&
+                    s.usernameError == null
+                    //&& s.emailError == null
         _state.value = state.value.copy(isValid = isFormValid.value)
     }
 

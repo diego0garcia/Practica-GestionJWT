@@ -3,6 +3,7 @@ package ies.sequeros.dam.pmdm.gestionperifl.infraestructure.restrepository
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.DeleteUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.LoginUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.RegisterUserCommand
+import ies.sequeros.dam.pmdm.gestionperifl.application.command.UpdateUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.dominio.dto.User
 import ies.sequeros.dam.pmdm.gestionperifl.dominio.repository.IAuthRepository
 import ies.sequeros.dam.pmdm.gestionperifl.dominio.repository.IUserRepository
@@ -23,8 +24,13 @@ class RestUserRepository(private val url: String, private val _client: HttpClien
         TODO("Not yet implemented")
     }
 
-    override suspend fun patchChangePassword(command: LoginUserCommand) {
-        TODO("Not yet implemented")
+    override suspend fun patchUserInfo(command: UpdateUserCommand) {
+        val token = sesionManager.accessToken.value
+        val request = _client.patch(url) {
+            header(HttpHeaders.Authorization, "Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(command)
+        }
     }
 
     override suspend fun patchChangeImage(command: LoginUserCommand) {

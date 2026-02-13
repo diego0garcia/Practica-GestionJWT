@@ -4,6 +4,7 @@ import coil3.SingletonImageLoader.get
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.DeleteUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.LoginUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.RegisterUserUseCase
+import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.UpdateUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.infraestructure.TokenStorage
 import ies.sequeros.dam.pmdm.gestionperifl.infraestructure.ktor.createHttpClient
 import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppSettings
@@ -49,9 +50,10 @@ val appModulo = module {
     viewModel { LoginFormViewModel(get(), get()) }
     viewModel { RegisterFormViewModel(get(), get()) }
     viewModel { HomeViewModel(get()) }
-    viewModel { ProfileViewModel(get(), get()) }
+    viewModel { ProfileViewModel(get(), get(), get()) }
 
     factory { RegisterUserUseCase(get()) }
     factory { LoginUserUseCase(get()) }
     factory { DeleteUserUseCase(get()) }
+    factory { UpdateUserUseCase(get()) }
 }
