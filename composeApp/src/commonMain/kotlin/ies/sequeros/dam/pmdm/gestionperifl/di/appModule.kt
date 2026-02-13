@@ -1,6 +1,7 @@
 package ies.sequeros.dam.pmdm.gestionperifl.di
 
 import coil3.SingletonImageLoader.get
+import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.ChangePasswordUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.DeleteUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.LoginUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.RegisterUserUseCase
@@ -9,8 +10,9 @@ import ies.sequeros.dam.pmdm.gestionperifl.infraestructure.TokenStorage
 import ies.sequeros.dam.pmdm.gestionperifl.infraestructure.ktor.createHttpClient
 import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppSettings
 import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppViewModel
+import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.profile.password.EditPasswordViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeViewModel
-import ies.sequeros.dam.pmdm.gestionperifl.ui.home.ProfileViewModel
+import ies.sequeros.dam.pmdm.gestionperifl.ui.home.profile.ProfileViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.login.LoginFormViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.register.RegisterFormViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.sesion.SesionManager
@@ -51,9 +53,11 @@ val appModulo = module {
     viewModel { RegisterFormViewModel(get(), get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { ProfileViewModel(get(), get(), get()) }
+    viewModel { EditPasswordViewModel(get(), get()) }
 
     factory { RegisterUserUseCase(get()) }
     factory { LoginUserUseCase(get()) }
     factory { DeleteUserUseCase(get()) }
     factory { UpdateUserUseCase(get()) }
+    factory { ChangePasswordUseCase(get()) }
 }

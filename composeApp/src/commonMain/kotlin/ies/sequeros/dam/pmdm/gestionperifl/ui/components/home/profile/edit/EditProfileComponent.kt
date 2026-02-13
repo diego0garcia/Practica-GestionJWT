@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ies.sequeros.com.dam.pmdm.administrador.ui.productos.form.ComboBox
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.UserStatus
-import ies.sequeros.dam.pmdm.gestionperifl.ui.home.ProfileViewModel
+import ies.sequeros.dam.pmdm.gestionperifl.ui.home.profile.ProfileViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -39,7 +39,6 @@ fun ProfileComponent() {
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-
             OutlinedTextField(
                 value = state.username,
                 onValueChange = { vm.onUsernameChange(it) },
@@ -75,14 +74,14 @@ fun ProfileComponent() {
                 )
             }
 
-            if (state.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (state.isLoading) {
+                    CircularProgressIndicator()
+                } else {
                     FilledTonalButton(onClick = { vm.clear() }) {
                         Icon(Icons.Default.Autorenew, contentDescription = null)
                     }

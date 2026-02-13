@@ -1,5 +1,6 @@
 package ies.sequeros.dam.pmdm.gestionperifl.infraestructure.restrepository
 
+import ies.sequeros.dam.pmdm.gestionperifl.application.command.ChangePasswordCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.DeleteUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.LoginUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.RegisterUserCommand
@@ -28,12 +29,16 @@ class RestUserRepository(private val url: String, private val _client: HttpClien
 
     }
 
-    override suspend fun putChangePassword(command: LoginUserCommand) {
+    override suspend fun putChangePassword(command: ChangePasswordCommand) {
         val token = sesionManager.accessToken.value
-        val request = _client.put(url){
+        val request = _client.put(url + "/password"){
             header(HttpHeaders.Authorization, "Bearer $token")
             contentType(ContentType.Application.Json)
             setBody(command)
+        }
+
+        if(!request.status.isSuccess()){
+            throw Exception("Error jefe: " + request.status.value.toString() + " " + request.status.description)
         }
 
     }
@@ -44,6 +49,10 @@ class RestUserRepository(private val url: String, private val _client: HttpClien
             header(HttpHeaders.Authorization, "Bearer $token")
             contentType(ContentType.Application.Json)
             setBody(command)
+        }
+
+        if(!request.status.isSuccess()){
+            throw Exception("Error mister: " + request.status.value.toString() + " " + request.status.description)
         }
 
     }
