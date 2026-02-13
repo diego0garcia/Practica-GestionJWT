@@ -21,4 +21,5 @@ class TokenStorage(private val settings: Settings) {
         settings.remove(KEY_ACCESS_TOKEN)
         settings.remove(KEY_REFRESH_TOKEN)
     }
+
 }

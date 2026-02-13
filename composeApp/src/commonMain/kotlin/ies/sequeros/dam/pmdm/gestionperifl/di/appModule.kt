@@ -18,11 +18,14 @@ import kotlin.coroutines.EmptyCoroutineContext.get
 
 val appModulo = module {
 
+    single { TokenStorage(get()) }
+    single { SesionManager(get()) }
+    single { AppSettings() }
     /**
      * infraestructura
      */
     single {
-        createHttpClient( //get(),
+        createHttpClient( get(),get(),
             "http://localhost:8080/api/public/refresh"
         )
     }
@@ -38,9 +41,8 @@ val appModulo = module {
     /**
     capa de presentación
      **/
-    single { TokenStorage(get()) }
-    single { SesionManager(get()) }
-    single { AppSettings() }
+
+
     viewModel { AppViewModel(get(),get()) }
     viewModel { LoginFormViewModel(get(), get()) }
     viewModel { RegisterFormViewModel(get(), get()) }
