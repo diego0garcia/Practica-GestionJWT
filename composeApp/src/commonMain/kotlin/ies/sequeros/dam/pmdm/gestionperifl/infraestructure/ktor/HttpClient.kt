@@ -59,35 +59,32 @@ fun createHttpClient(tokenStorage: TokenStorage,sesionManager: SesionManager,
         install(Auth) {
             bearer {
                 loadTokens {
-                    BearerTokens(accessToken = "mi_token_jwt", refreshToken =
-                        "")
+                    val access = tokenStorage.getAccessToken()
+                    val refresh = tokenStorage.getRefreshToken()
+
+                    if (!access.isNullOrBlank()) {
+                        BearerTokens(accessToken = access, refreshToken = refresh ?: "")
+                    } else null
                 }
 
                 refreshTokens {
-                    // Enviamos la petición de refresco como un mapa (JSON)
-                    //end point de refresco
-                    val response =
-                        client.post("https://api.mi-app.com/auth/refresh") {
-                            markAsRefreshTokenRequest()
-                            //token de refresco
-                            setBody(mapOf("refresh_token" to "token...."))
-                        }
+                    val oldRefreshToken = tokenStorage.getRefreshToken() ?: return@refreshTokens null
+
+                    val response = client.post(refreshUrl) {
+                        markAsRefreshTokenRequest()
+                        setBody(mapOf("refresh_token" to oldRefreshToken))
+                    }
 
                     if (response.status == HttpStatusCode.OK) {
-                        // Leemos la respuesta directamente como un Mapa
                         val data = response.body<Map<String, String>>()
 
-                        // Extraer los valores usando las llaves del JSON
                         val newAccess = data["access_token"] ?: ""
-                        val newRefresh = data["refresh_token"] ?: "antiguo refresh token" ?: ""
-                        val idToken = data["id_token"] // Será null si es
+                        val newRefresh = data["refresh_token"] ?: oldRefreshToken
+                        val idToken = data["id_token"] ?: ""
 
-                        // actualizra el almacen de tokens
+                        tokenStorage.saveTokens(newAccess, newRefresh, idToken)
+                        sesionManager.recuperarSesion()
 
-                        // Opcional: Si existe id_token, aquí se podriña
-                        if (idToken == null) {
-                            println("Se ha recibido identidad (OIDC): $idToken")
-                        }
                         BearerTokens(newAccess, newRefresh)
                     } else {
                         null

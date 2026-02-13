@@ -6,8 +6,9 @@ class TokenStorage(private val settings: Settings) {
     companion object {
         private const val KEY_ACCESS_TOKEN = "access_token"
         private const val KEY_REFRESH_TOKEN = "refresh_token"
-        private const val KEY_DATA_TOKEN = "refresh_token"
+        private const val KEY_DATA_TOKEN = "data_token"
     }
+
     fun saveTokens(accessToken: String, refreshToken: String, dataToken: String) {
         settings.putString(KEY_ACCESS_TOKEN, accessToken)
         settings.putString(KEY_REFRESH_TOKEN, refreshToken)
