@@ -23,7 +23,7 @@ class SesionManager(private val tokenStorage: TokenStorage) {
     fun iniciarSesion(user: User, accessToken: String, refreshToken: String, dataToken: String) {
         _currentUser.update { user }
         _accessToken.update { accessToken }
-        _refreshToken.update { refreshToken }
+        //_refreshToken.update { refreshToken }
         _refreshToken.update { dataToken }
 
         tokenStorage.saveTokens(accessToken, refreshToken, dataToken)

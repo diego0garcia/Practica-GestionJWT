@@ -39,12 +39,20 @@ fun HomeScreen(
     val appVm = koinViewModel<AppViewModel>()
     val profVm = koinViewModel<ProfileViewModel>()
 
+    val updateUser by profVm.state.collectAsState()
     val deleteUser by profVm.deleteState.collectAsState()
 
     val navController = rememberNavController()
     val options by vm.options.collectAsState()
+
     var showDialogCloseSesion by remember { mutableStateOf(false) }
     var showDialogDeleteUser by remember { mutableStateOf(false) }
+
+    LaunchedEffect(updateUser.isUpdateSuccess) {
+        if (updateUser.isUpdateSuccess) {
+            onCloseSesion()
+        }
+    }
 
     LaunchedEffect(deleteUser.isDeleted) {
         if (deleteUser.isDeleted) {
