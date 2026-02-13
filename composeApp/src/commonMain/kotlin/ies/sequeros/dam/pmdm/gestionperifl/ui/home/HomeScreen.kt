@@ -27,6 +27,7 @@ import ies.sequeros.dam.pmdm.gestionperifl.ui.appsettings.AppViewModel
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.HomeComponent
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.LogOutDialogComponet
 import ies.sequeros.dam.pmdm.gestionperifl.ui.home.profile.ProfileScreen
+import ies.sequeros.dam.pmdm.gestionperifl.ui.home.profile.ProfileViewModel
 
 @Composable
 fun HomeScreen(

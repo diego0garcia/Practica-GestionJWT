@@ -30,7 +30,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import ies.sequeros.dam.pmdm.gestionperifl.ui.home.ProfileViewModel
+import ies.sequeros.dam.pmdm.gestionperifl.ui.home.profile.ProfileViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

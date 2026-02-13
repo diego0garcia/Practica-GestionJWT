@@ -1,4 +1,4 @@
-package ies.sequeros.dam.pmdm.gestionperifl.ui.home
+package ies.sequeros.dam.pmdm.gestionperifl.ui.home.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,9 +6,9 @@ import ies.sequeros.dam.pmdm.gestionperifl.application.command.DeleteUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.UpdateUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.DeleteUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.UpdateUserUseCase
+import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.UserStatus
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.profile.delete.DeleteState
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.profile.edit.EditProfileState
-import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.UserStatus
 import ies.sequeros.dam.pmdm.gestionperifl.ui.sesion.SesionManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

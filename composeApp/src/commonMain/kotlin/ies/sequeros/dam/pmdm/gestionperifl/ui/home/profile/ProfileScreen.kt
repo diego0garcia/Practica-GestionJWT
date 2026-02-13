@@ -39,7 +39,7 @@ import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.profile.edit.Profi
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.profile.info.InfoProfileComponent
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.profile.password.EditPasswordProfileComponent
 import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeViewModel
-import ies.sequeros.dam.pmdm.gestionperifl.ui.home.ProfileViewModel
+import ies.sequeros.dam.pmdm.gestionperifl.ui.home.profile.ProfileViewModel
 
 @Composable
 fun ProfileScreen(
