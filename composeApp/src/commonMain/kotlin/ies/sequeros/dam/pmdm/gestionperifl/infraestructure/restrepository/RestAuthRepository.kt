@@ -43,10 +43,11 @@ class RestAuthRepository(private val url: String, private val _client: HttpClien
             id = tokenDatos.payload.userId ?: "",
             username = tokenDatos.payload.userName ?: "",
             email = tokenDatos.payload.userEmail ?: "",
-            image = tokenDatos.payload.userImage
+            image = tokenDatos.payload.userImage,
+            status = null
         )
 
-        sesionManager.iniciarSesion(user, tokenAccess.rawToken, tokenRefresh.rawToken)
+        sesionManager.iniciarSesion(user, tokenAccess.rawToken, tokenRefresh.rawToken, tokenDatos.rawToken)
 
         return user
     }

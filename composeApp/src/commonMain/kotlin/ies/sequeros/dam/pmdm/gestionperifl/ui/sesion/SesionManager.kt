@@ -17,15 +17,19 @@ class SesionManager(private val tokenStorage: TokenStorage) {
     private val _refreshToken = MutableStateFlow<String?>(null)
     val refreshToken = _refreshToken.asStateFlow()
 
-    fun iniciarSesion(user: User, accessToken: String, refreshToken: String){
+    private val _dataToken = MutableStateFlow<String?>(null)
+    val dataToken = _dataToken.asStateFlow()
+
+    fun iniciarSesion(user: User, accessToken: String, refreshToken: String, dataToken: String) {
         _currentUser.update { user }
         _accessToken.update { accessToken }
         _refreshToken.update { refreshToken }
+        _refreshToken.update { dataToken }
 
-        tokenStorage.saveTokens(accessToken, refreshToken)
+        tokenStorage.saveTokens(accessToken, refreshToken, dataToken)
     }
 
-    fun cerrarSesion(){
+    fun cerrarSesion() {
         _currentUser.update { null }
         _accessToken.update { null }
         _refreshToken.update { null }
@@ -36,27 +40,28 @@ class SesionManager(private val tokenStorage: TokenStorage) {
     fun recuperarSesion(): Boolean {
         val access = tokenStorage.getAccessToken()
         val refresh = tokenStorage.getRefreshToken()
+        val data = tokenStorage.getDataToken()
 
-        if (!access.isNullOrBlank()) {
-            try {
-                val tokenData = TokenJwt(access)
-                val user = User(
-                    id = tokenData.payload.userId ?: "",
-                    username = tokenData.payload.userName ?: "",
-                    email = tokenData.payload.userEmail ?: "",
-                    image = tokenData.payload.userImage
-                )
+        if (!data.isNullOrBlank()) {
+            val tokenData = TokenJwt(data)
+            val user = User(
+                id = tokenData.payload.userId!!,
+                username = tokenData.payload.userName!!,
+                email = tokenData.payload.userEmail ?: "",
+                image = tokenData.payload.userImage,
+                status = null
+            )
 
-                _currentUser.value = user
-                _accessToken.value = access
-                _refreshToken.value = refresh
-                return true
-            } catch (e: Exception) {
-                return false
-            }
+            _currentUser.update { user }
+
+            //_currentUser.value = user
+            _accessToken.update { access }
+            _refreshToken.update { refresh }
+            return true
         }
         return false
     }
+
     fun haySesionActiva(): Boolean {
         return tokenStorage.getAccessToken() != null
     }

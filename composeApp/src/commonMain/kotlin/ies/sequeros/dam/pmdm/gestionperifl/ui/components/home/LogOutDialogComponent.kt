@@ -54,6 +54,9 @@ fun LogOutDialogComponet(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
+                Spacer(Modifier.height(36.dp))
+
                 Text(
                     text = "¿Quieres cerrar sesión?",
                     fontWeight = FontWeight.Bold,
