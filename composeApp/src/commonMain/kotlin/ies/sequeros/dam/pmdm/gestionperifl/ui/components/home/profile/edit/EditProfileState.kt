@@ -1,6 +1,8 @@
-package ies.sequeros.dam.pmdm.gestionperifl.ui.components.home
+package ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.profile.edit
 
-data class ProfileState (
+import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.UserStatus
+
+data class EditProfileState (
     val username: String = "",
     val status: UserStatus = UserStatus.PENDING,
     val password: String = "",

@@ -1,4 +1,4 @@
-package ies.sequeros.dam.pmdm.gestionperifl.ui.components.home
+package ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.profile.edit
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -12,16 +12,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.unit.dp
 import ies.sequeros.com.dam.pmdm.administrador.ui.productos.form.ComboBox
+import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.UserStatus
 import ies.sequeros.dam.pmdm.gestionperifl.ui.home.ProfileViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun ProfileComponent(
-    onDeleteUser: () -> Unit
-) {
+fun ProfileComponent() {
     val vm: ProfileViewModel = koinViewModel()
     val state by vm.state.collectAsState()
     val scrollState = rememberScrollState()
@@ -41,49 +39,6 @@ fun ProfileComponent(
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Información de Perfil",
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    IconButton(
-                        onClick = {
-                            onDeleteUser()
-                        },
-                        content = {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.error,
-                                modifier = Modifier.size(36.dp)
-                            )
-                        }
-                    )
-                    IconButton(
-                        onClick = {
-                            //onDeleteUser()
-                        },
-                        content = {
-                            Icon(
-                                imageVector = Icons.Default.Password,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(36.dp)
-                            )
-                        }
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = state.username,
