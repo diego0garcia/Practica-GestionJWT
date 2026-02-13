@@ -10,18 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import ies.sequeros.dam.pmdm.gestionperifl.ui.home.HomeViewModel
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun LoginComponent (state: LoginState,
-                    onEmailChange: (String) -> Unit,
-                    onPasswordChange: (String) -> Unit,
-                    onLoginClick: () -> Unit,
-                    onCancel: () -> Unit) {
-
-    val vmHome: HomeViewModel = koinViewModel()
-
+fun LoginComponent(
+    state: LoginState,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLoginClick: () -> Unit,
+    onCancel: () -> Unit
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -40,7 +37,6 @@ fun LoginComponent (state: LoginState,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
 
-            // Campo de Email
             OutlinedTextField(
                 value = state.email,
                 onValueChange = { onEmailChange(it) },
@@ -56,7 +52,6 @@ fun LoginComponent (state: LoginState,
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Campo de Contraseña
             OutlinedTextField(
                 value = state.password,
                 onValueChange = { onPasswordChange(it) },
@@ -70,13 +65,13 @@ fun LoginComponent (state: LoginState,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
-            // Error General
+
             if (state.errorMessage != null) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = state.errorMessage!!,
+                    text = state.errorMessage,
                     color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
 
@@ -87,9 +82,8 @@ fun LoginComponent (state: LoginState,
             } else {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp) // Espacio entre botones
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    // Botón de Cancelar (Secundario)
                     OutlinedButton(
                         onClick = onCancel,
                         modifier = Modifier.weight(1f),
@@ -98,29 +92,13 @@ fun LoginComponent (state: LoginState,
                         Text("Cancelar")
                     }
 
-                    // Botón de Login (Primario)
                     Button(
-                        onClick = {
-                            onLoginClick()
-                            //vmHome.sesionManager.iniciarSesion(state.user!!, "")
-                            //viewModel.login()
-
-                        },
+                        onClick = onLoginClick,
                         modifier = Modifier.weight(1f),
-                        enabled = state.isValid && !state.isLoading,
+                        enabled = true,
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text("Entrar")
-                    }
-                    if (state.errorMessage != null) {
-                        Text(
-                            text = state.errorMessage,
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier
-                                .padding(bottom = 8.dp)
-                                .fillMaxWidth()
-                        )
                     }
                 }
             }
