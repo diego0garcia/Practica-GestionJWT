@@ -3,14 +3,12 @@ package ies.sequeros.dam.pmdm.gestionperifl.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.DeleteUserCommand
-import ies.sequeros.dam.pmdm.gestionperifl.application.command.RegisterUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.command.UpdateUserCommand
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.DeleteUserUseCase
 import ies.sequeros.dam.pmdm.gestionperifl.application.usecase.UpdateUserUseCase
-import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.DeleteState
-import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.ProfileState
+import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.profile.delete.DeleteState
+import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.profile.edit.EditProfileState
 import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.UserStatus
-import ies.sequeros.dam.pmdm.gestionperifl.ui.components.register.RegisterState
 import ies.sequeros.dam.pmdm.gestionperifl.ui.sesion.SesionManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,8 +21,8 @@ class ProfileViewModel(
     private val deleteUserUseCase: DeleteUserUseCase,
     private val updateUserUseCase: UpdateUserUseCase
 ) : ViewModel() {
-    private val _state = MutableStateFlow(ProfileState())
-    val state: StateFlow<ProfileState> = _state.asStateFlow()
+    private val _state = MutableStateFlow(EditProfileState())
+    val state: StateFlow<EditProfileState> = _state.asStateFlow()
 
     private val _deleteState = MutableStateFlow(DeleteState())
     val deleteState: StateFlow<DeleteState> = _deleteState.asStateFlow()
@@ -88,7 +86,7 @@ class ProfileViewModel(
 
     fun clear() {
         _state.update {
-            ProfileState()
+            EditProfileState()
         }
     }
 

@@ -1,4 +1,4 @@
-package ies.sequeros.dam.pmdm.gestionperifl.ui.components.home
+package ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.profile.delete
 
 data class DeleteState (
     val password: String = "",
