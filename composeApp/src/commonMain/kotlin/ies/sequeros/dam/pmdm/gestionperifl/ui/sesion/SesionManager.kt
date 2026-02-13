@@ -24,7 +24,7 @@ class SesionManager(private val tokenStorage: TokenStorage) {
         _currentUser.update { user }
         _accessToken.update { accessToken }
         _refreshToken.update { refreshToken }
-        _refreshToken.update { dataToken }
+        _dataToken.update { dataToken }
 
         tokenStorage.saveTokens(accessToken, refreshToken, dataToken)
     }
@@ -33,6 +33,7 @@ class SesionManager(private val tokenStorage: TokenStorage) {
         _currentUser.update { null }
         _accessToken.update { null }
         _refreshToken.update { null }
+        _dataToken.update { null }
 
         tokenStorage.clear()
     }
