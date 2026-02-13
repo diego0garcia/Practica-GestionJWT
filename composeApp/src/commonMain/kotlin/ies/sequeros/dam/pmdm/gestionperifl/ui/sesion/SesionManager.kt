@@ -50,7 +50,7 @@ class SesionManager(private val tokenStorage: TokenStorage) {
                 username = tokenData.payload.userName!!,
                 email = tokenData.payload.userEmail ?: "",
                 image = tokenData.payload.userImage,
-                status = null
+                status = tokenData.payload.status,
             )
 
             _currentUser.update { user }
@@ -66,6 +66,5 @@ class SesionManager(private val tokenStorage: TokenStorage) {
     fun haySesionActiva(): Boolean {
         return tokenStorage.getAccessToken() != null
     }
-
 
 }

@@ -10,6 +10,7 @@ import ies.sequeros.dam.pmdm.gestionperifl.ui.sesion.SesionManager
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.utils.EmptyContent.status
 import io.ktor.http.*
 
 class RestAuthRepository(private val url: String, private val _client: HttpClient, private val sesionManager: SesionManager) : IAuthRepository {
@@ -45,7 +46,7 @@ class RestAuthRepository(private val url: String, private val _client: HttpClien
             username = tokenDatos.payload.userName ?: "",
             email = tokenDatos.payload.userEmail ?: "",
             image = tokenDatos.payload.userImage,
-            status = null
+            status = tokenDatos.payload.status,
         )
 
         sesionManager.iniciarSesion(user, tokenAccess.rawToken, tokenRefresh.rawToken, tokenDatos.rawToken)
