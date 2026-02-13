@@ -18,6 +18,7 @@ class RestAuthRepository(private val url: String, private val _client: HttpClien
             contentType(ContentType.Application.Json)
             setBody(command)
         }
+
     }
 
     override suspend fun login(command: LoginUserCommand): User {
@@ -53,6 +54,10 @@ class RestAuthRepository(private val url: String, private val _client: HttpClien
     }
 
     override suspend fun delete(command: RegisterUserCommand): User {
-        TODO("Not yet implemented")
+        val request = _client.delete(url + "delete") {
+            contentType(ContentType.Application.Json)
+            setBody(command)
+        }
+        return request.body()
     }
 }
