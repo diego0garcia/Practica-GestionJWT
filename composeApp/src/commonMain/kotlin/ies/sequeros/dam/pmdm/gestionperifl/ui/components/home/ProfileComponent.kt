@@ -42,7 +42,7 @@ fun ProfileComponent(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
                     text = "Información de Perfil",
@@ -64,8 +64,8 @@ fun ProfileComponent(
                 )
 
             }
-            Spacer(modifier = Modifier.height(8.dp))
 
+            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = state.username,

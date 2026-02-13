@@ -47,7 +47,7 @@ class RestAuthRepository(private val url: String, private val _client: HttpClien
             status = null
         )
 
-        sesionManager.iniciarSesion(user, tokenAccess.rawToken, tokenRefresh.rawToken)
+        sesionManager.iniciarSesion(user, tokenAccess.rawToken, tokenRefresh.rawToken, tokenDatos.rawToken)
 
         return user
     }

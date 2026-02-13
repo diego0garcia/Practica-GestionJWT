@@ -19,4 +19,4 @@ captures
 node_modules/
 practica.pdf
 .vscode
-server/database/postgres-data/
+server/database/postgres-data/*

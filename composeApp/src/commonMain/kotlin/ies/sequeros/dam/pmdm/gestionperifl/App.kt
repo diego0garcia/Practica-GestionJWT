@@ -28,7 +28,7 @@ fun App() {
             startDestination = if (user != null) {
                 AppRoutes.Home
             } else {
-                AppRoutes.Login
+                AppRoutes.Init
             }
         ){
             composable ( AppRoutes.Init ){
