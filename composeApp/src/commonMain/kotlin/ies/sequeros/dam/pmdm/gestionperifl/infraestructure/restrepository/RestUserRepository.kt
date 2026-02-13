@@ -17,11 +17,25 @@ import io.ktor.http.*
 
 class RestUserRepository(private val url: String, private val _client: HttpClient, private val sesionManager: SesionManager) : IUserRepository {
     override suspend fun getAllInfo(command: RegisterUserCommand) {
-        TODO("Not yet implemented")
+        val token = sesionManager.accessToken.value
+
+        val request = _client.get(url){
+            header(HttpHeaders.Authorization, "Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(command)
+        }
+
+
     }
 
     override suspend fun putChangePassword(command: LoginUserCommand) {
-        TODO("Not yet implemented")
+        val token = sesionManager.accessToken.value
+        val request = _client.put(url){
+            header(HttpHeaders.Authorization, "Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(command)
+        }
+
     }
 
     override suspend fun patchUserInfo(command: UpdateUserCommand) {
@@ -31,10 +45,17 @@ class RestUserRepository(private val url: String, private val _client: HttpClien
             contentType(ContentType.Application.Json)
             setBody(command)
         }
+
     }
 
     override suspend fun patchChangeImage(command: LoginUserCommand) {
-        TODO("Not yet implemented")
+        val token = sesionManager.accessToken.value
+        val request = _client.patch(url) {
+            header(HttpHeaders.Authorization, "Bearer $token")
+            contentType(ContentType.Application.Json)
+            setBody(command)
+        }
+
     }
 
     override suspend fun delete(command: DeleteUserCommand) {

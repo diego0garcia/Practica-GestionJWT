@@ -23,7 +23,6 @@ data class TokenJwtPayload(val claims: Map<String, Any> = emptyMap()){
 data class TokenJwtFirma(val firma:String)
 
 
-
 class TokenJwt(val rawToken: String) {
 
     val header: TokenJwtHeader
