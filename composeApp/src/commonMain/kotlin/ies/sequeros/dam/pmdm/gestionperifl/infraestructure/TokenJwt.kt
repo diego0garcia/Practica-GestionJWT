@@ -18,6 +18,7 @@ data class TokenJwtPayload(val claims: Map<String, Any> = emptyMap()){
     val userName: String? get() = get("name")
     val userEmail: String? get() = get("email")
     val userImage: String? get() = get("picture")
+    val status: String?  get() = get("status")
     val expiration: Long? get() = (claims["exp"] as? Number)?.toLong()
 }
 data class TokenJwtFirma(val firma:String)
