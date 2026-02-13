@@ -54,9 +54,24 @@ class LoginFormViewModel(
 
     fun onLogin() {
         viewModelScope.launch {
-            login()
 
-            println(state.value.user.toString())
+            _state.update { it.copy(isLoading = true, errorMessage = null) }
+
+            val loginCommand = LoginUserCommand(
+                email = state.value.email,
+                password = state.value.password
+            )
+
+            loginUseCase.invoke(loginCommand)
+                .onSuccess { result ->
+                    _state.update {
+                        it.copy(isLoading = false, isLoginSuccess = true, user = result)
+                    }
+                }
+                .onFailure {
+                    _state.update { it.copy(isLoading = false, isLoginSuccess = false, errorMessage = "Email o contraseña incorrecto") }
+
+                }
         }
     }
 
