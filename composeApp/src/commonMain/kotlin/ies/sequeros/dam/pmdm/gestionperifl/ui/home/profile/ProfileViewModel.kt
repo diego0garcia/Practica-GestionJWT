@@ -152,6 +152,7 @@ class ProfileViewModel(
                 .onSuccess {
                     //_state.value = _state.value.copy(isLoginSuccess = true)
                     _state.update { it.copy(isLoading = false, isUpdateSuccess = true) }
+                    _sesionManager.onStatusChange(state.value.status)
                     //_sesionManager.cerrarSesion()
                     //print("Respuesta: " + it)
 

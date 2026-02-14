@@ -3,6 +3,7 @@ package ies.sequeros.dam.pmdm.gestionperifl.ui.sesion
 import ies.sequeros.dam.pmdm.gestionperifl.dominio.dto.User
 import ies.sequeros.dam.pmdm.gestionperifl.infraestructure.TokenJwt
 import ies.sequeros.dam.pmdm.gestionperifl.infraestructure.TokenStorage
+import ies.sequeros.dam.pmdm.gestionperifl.ui.components.home.UserStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -20,6 +21,11 @@ class SesionManager(private val tokenStorage: TokenStorage) {
     private val _dataToken = MutableStateFlow<String?>(null)
     val dataToken = _dataToken.asStateFlow()
 
+    fun onStatusChange(status: UserStatus){
+        _currentUser.update{
+            it?.copy(status = status.toString())
+        }
+    }
     fun iniciarSesion(user: User, accessToken: String, refreshToken: String, dataToken: String) {
         _currentUser.update { user }
         _accessToken.update { accessToken }
