@@ -78,7 +78,7 @@ fun DeleteDialogComponet(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     modifier = Modifier.fillMaxWidth()
                 )
-                state.passwordError?.let {
+                state.errorMessage?.let {
                     Text(
                         it,
                         style = MaterialTheme.typography.labelSmall,

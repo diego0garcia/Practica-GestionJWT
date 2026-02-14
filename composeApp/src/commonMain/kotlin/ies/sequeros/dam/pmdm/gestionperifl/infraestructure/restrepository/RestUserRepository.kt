@@ -74,5 +74,9 @@ class RestUserRepository(private val url: String, private val _client: HttpClien
             contentType(ContentType.Application.Json)
             setBody(command)
         }
+
+        if(!request.status.isSuccess()){
+            throw Exception("Error lokete: " + request.status.value.toString() + " " + request.status.description)
+        }
     }
 }

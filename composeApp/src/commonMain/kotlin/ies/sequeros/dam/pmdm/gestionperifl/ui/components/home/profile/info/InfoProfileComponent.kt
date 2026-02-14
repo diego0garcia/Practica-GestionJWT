@@ -22,6 +22,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun InfoProfileComponent(sesionManager: SesionManager = koinInject()) {
+    
     val usuario by sesionManager.currentUser.collectAsState()
     val scrollState = rememberScrollState()
 
